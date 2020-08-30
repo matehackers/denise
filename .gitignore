@@ -3,3 +3,11 @@
 *~
 *.swp
 
+# Subs
+hugo/
+tercasemfim/
+aufem/
+ipfs/
+bahackers/
+arquivos/videos/
+
