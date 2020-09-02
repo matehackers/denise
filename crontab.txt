@@ -1,0 +1,7 @@
+## Crontab para www-data@denise.matehackers.org
+SHELL=/bin/bash
+@hourly pushd ~/pelican && /usr/bin/git pull origin source && ~/.local/bin/pipenv run denise
+@hourly pushd ~/denise && /usr/bin/git pull origin main
+@hourly pushd ~/denise/wiki && /usr/bin/git pull origin master
+@hourly pushd ~/hugo && /usr/bin/git pull origin main && /usr/bin/hugo -d /var/www/denise/tercasemfim/ -b '/tercasemfim/'
+
