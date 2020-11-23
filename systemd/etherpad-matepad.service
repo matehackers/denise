@@ -1,0 +1,14 @@
+[Unit]
+Description=MatePad (Etherpad Lite)
+After=syslog.target network.target nss-lookup.target
+
+[Service]
+Type=simple
+Environment=NODE_ENV=production
+ExecStart=/var/www/pad/bin/run.sh --setings .instance/pad.matehackers.org.json
+WorkingDirectory=/var/www/pad
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
