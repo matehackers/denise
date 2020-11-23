@@ -1,47 +1,40 @@
 #!/bin/bash
-## Download de todos vídeos do Matehackers espalhados por aí
+## Download de todos vídeo do Matehackers
 
-## Menor tamanho possível (em espaço no disco)
-QUALIDADE='worstvideo+worstaudio/worst'
+LISTA_NOVA="matevideos.txt"
+LISTA="matevideos.ytdl.txt"
 
-## Lista de opções
-OPCOES=(
-"--format ${QUALIDADE}" \
-"--batch-file ${LISTA_YTDL}" \
-"--id" \
-"--mark-watched" \
-"--continue" \
-"--yes-playlist" \
-"--write-description" \
-"--write-info-json" \
-"--write-annotations" \
-"--write-thumbnail" \
-#"--write-all-thumbnails" \
-"--all-subs" \
-"--verbose" \
-## Comentar as duas próximas opções pra efetivamente fazer o download dos vídeos/áudios
-"--simulate" \
-"--skip-download" \
-)
-
-###
-### Não deveria ser necessário mudar nada daqui pra baixo
-###
-
-LISTA="matevideos.txt"
-if  [ ! -f ${LISTA} ]
+if  [ ! -f ${LISTA_NOVA} ]
 then
   echo "Que-de-lhe a lista de vídeos? Pede no https://t.me/matehackerspoa"
   exit
 fi
 
-## Organiza a ordem das URLs por razões de transtorno obsessivo compulsivo
-LISTA_YTDL="matevideos.ytdl.txt"
-sort ${LISTA} | uniq 1> ${LISTA_YTDL}
+sort ${LISTA_NOVA} | uniq 1> ${LISTA}
 
-## Garante última versão da ferramenta auxiliar
-python3 -m pip install --user --upgrade pip youtube-dl
+## Menor tamanho possível
+QUALIDADE='worstvideo+worstaudio/worst'
+## Melhor qualidade possível
+#QUALIDADE='bestvideo+bestaudio/best'
 
-## Presumindo Debian/Linux
-${HOME}/.local/bin/youtube-dl ${OPCOES}
+python3 -m pip install --user --upgrade youtube-dl
+
+${HOME}/.local/bin/youtube-dl \
+--format ${QUALIDADE} \
+--batch-file ${LISTA} \
+--ignore-errors \
+--id \
+--mark-watched \
+--continue \
+--yes-playlist \
+--write-description \
+--write-info-json \
+--write-annotations \
+--write-thumbnail \
+--all-subs \
+--verbose
+
+## Usar estas opções para testar o script
+#--simulate \
+#--skip-download \
 
